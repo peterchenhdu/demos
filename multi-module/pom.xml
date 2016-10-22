@@ -1,0 +1,41 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cn.edu.hdu.mm</groupId>
+  <artifactId>multi-module</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>multi-module</name>
+  <description>multi module projects.</description>
+  <modules>
+  	<module>multi-module-common</module>
+  	<module>multi-module-dao</module>
+  	<module>multi-module-service</module>
+  	<module>multi-module-web</module>
+  </modules>
+  
+  <properties>
+      <spring-version>3.2.16.RELEASE</spring-version>
+      <mybatis-version>3.2.8</mybatis-version>
+  </properties>
+  
+  	<build>
+		<finalName>multi-module-web</finalName>
+		 
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
