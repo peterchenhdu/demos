@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+<!-- 
+MyBatis3Simple 	这是默认值  不会有"by example"一类的方法，只有少量的动态SQL。
+flat 	该模型为每一张表只生成一个实体类。这个实体类包含表中的所有字段
+ -->
+    <context id="default" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!-- 该插件给实体类添加toString()方法  -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 这个插件给由MBG生成的Java模型对象增加了equals和hashCode方法 -->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        
+        <!-- 不希望生成的注释中包含时间戳 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+        
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/demo?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull"
+                        userId="root" password="root">
+        </jdbcConnection>
+        
+        <!-- 
+            true：使用BigDecimal对应DECIMAL和 NUMERIC数据类型
+            false：默认,
+                scale>0;length>18：使用BigDecimal;
+                scale=0;length[10,18]：使用Long；
+                scale=0;length[5,9]：使用Integer；
+                scale=0;length<5：使用Short；
+         -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        
+        <javaModelGenerator targetPackage="cn.edu.hdu.mbgdemo.model.generator" targetProject="src/main/java">
+             <!-- 是否  自动为每一个生成的类创建一个构造方法-->
+            <property name="constructorBased" value="false"/>
+            <property name="useActualColumnNames" value="true" />
+            <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package-->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否创建一个不可变的类 -->
+            <property name="immutable" value="false"/>
+            <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="cn.edu.hdu.mbgdemo.base.BaseModel"/>
+        </javaModelGenerator>
+        
+        <!-- 生成SQL map的XML文件生成器-->
+        <sqlMapGenerator targetPackage="mappers.generator" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        
+        <javaClientGenerator targetPackage="cn.edu.hdu.mbgdemo.dao.generator" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+            <property name="rootInterface" value="cn.edu.hdu.mbgdemo.base.BaseDao"/>
+        </javaClientGenerator>
+        
+        <!--这里包含SQL通配符，表示匹配所有demo开头的表-->
+        <table tableName="demo_%">
+        
+        </table>
+    </context>
+</generatorConfiguration>
