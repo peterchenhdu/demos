@@ -1,17 +1,22 @@
 <dataConfig>
-    <dataSource name="demoDB" type="JdbcDataSource" driver="com.mysql.jdbc.Driver" url="jdbc:mysql://10.0.10.53:3306/rcps-dev?zeroDateTimeBehavior=convertToNull" user="root" password="123456"/>
+    <dataSource name="demoDB" 
+				type="JdbcDataSource" 
+				driver="com.mysql.jdbc.Driver" 
+				url="jdbc:mysql://10.0.10.53:3306/rcps-dev?zeroDateTimeBehavior=convertToNull" 
+				user="root" 
+				password="123456"/>
+				
     <document>
         <entity dataSource="demoDB"  name="t_rcps_logicarea" transformer="ClobTransformer" pk="id"
-        
             query="select id, name, markup, address from t_rcps_logicarea where valid=1"
             deltaImportQuery="select id, name, markup, address from t_rcps_logicarea where id='${dataimporter.delta.id}'"
             deletedPkQuery="select id  from documents where valid=0">
-            <!-- deltaQuery="select id  from t_rcps_logicarea where updatetime > '${dataimporter.last_index_time}'" -->
-           
+            <!-- deltaQuery="select id  from t_rcps_logicarea where updatetime > str_to_date('${dataimporter.last_index_time}', '%Y-%m-%d %H:%i:%s')"> -->
             <field  column="id"  name="id"/>
             <field  column="name"  name="name"/>
             <field  column="markup"  name="markup"/>
             <field  column="address"  name="address"/>
         </entity>
     </document>
+	
 </dataConfig>

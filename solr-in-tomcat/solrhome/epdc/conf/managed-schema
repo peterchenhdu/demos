@@ -119,11 +119,9 @@
     -->
     <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
     
-    
-    
     <field name="name" type="string" indexed="true" stored="true" required="true" />
     <field name="markup" type="string" indexed="true" stored="true" required="true"  />
-    <field name="address" type="string" indexed="true" stored="true" required="true"  />
+    <field name="address" type="text_ik" indexed="true" stored="true" required="true"  />
     
     <field name="_version_" type="long" indexed="true" stored="true"/>
     <field name="_root_" type="string" indexed="true" stored="false"/>
@@ -252,6 +250,13 @@
     <fieldType name="longs" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0" multiValued="true"/>
     <fieldType name="doubles" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0" multiValued="true"/>
 
+	<fieldType name="text_ik" class="solr.TextField">
+        <!--索引时候的分词器-->
+		<analyzer type="index" isMaxWordLength="false" class="org.wltea.analyzer.lucene.IKAnalyzer"/>
+		<!--查询时候的分词器-->
+		<analyzer type="query" isMaxWordLength="true" class="org.wltea.analyzer.lucene.IKAnalyzer"/>
+	</fieldType>
+	
     <!--
      Numeric field types that index each value at various levels of precision
      to accelerate range queries when the number of values between the range
